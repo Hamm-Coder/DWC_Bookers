@@ -1,7 +1,7 @@
 
 <h1>Books</h1>
 
-<div class="books-wrap">
+
 <table>
   <thead>
     <tr>
@@ -11,40 +11,37 @@
     </tr>
   </thead>
   <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.title %></td>
-        <td><%= book.body %></td>
-        <td><a class="show_<%= book.id %>" href="/books/<%= book.id %>">Show</a></td>
-        <td><a class="edit_<%= book.id %>" href="/books/<%= book.id %>/edit">Edit</a></td>
-        <td><a data-confirm="Are you sure?" class="destroy_<%= book.id %>" rel="nofollow" data-method="delete" href="/books/<%= book.id %>">Destroy</a></td>
-        <td><a data-confirm="Are you sure?" class="destroy_252181" rel="nofollow" data-method="delete" href="/books/252181">Destroy</a></td>
-      </tr>
-    <% end %>
+    <%= render partial: 'book', collection: @books %>
   </tbody>
 </table>
-</div>
+
 <p></p>
 
-<h1>New Book</h1>
+<h2>New Book</h2>
 <!-- form_with部分-->
 <% if @book.errors.any? %>
-  <%= @book.errors.count %>件のエラーが発生しました
-  <ul>
+  <%= content_tag(:div, id: 'error_explanation') do %>
+    <h2><%= @book.errors.count %> errors prohibited this book from being saved:</h2>
+    <ul>
     <% @book.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+
   <% end %>
-  </ul>
 <% end %>
 
 
-<%= form_with model: @book, url: '/books', method: :post do |f| %>
-
-  <h4>Title</h4>
-  <%= f.text_field :title %>
-  <h4>Body</h4>
-  <%= f.text_area :body %>
-
+<%= form_with model: @book, url: '/books', html:{id: 'new_book', class: 'newbook'}, method: :post do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'book_title' %>
+  </div>
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body, class: 'book_body' %>
+  </div>
+  <div class="actions">
   <%= f.submit 'Create Book' %>
-
+  </div>
 <% end %>
