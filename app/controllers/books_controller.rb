@@ -13,6 +13,9 @@ class BooksController < ApplicationController
 #  end
 
   def create #create
+    #Createを呼び出す際に、indexで使用する一覧用インスタンス変数@books（Book.all）を呼び出す
+    @books =Book.all
+    
     #1.&2. データを受取り、新規登録するためのインスタンス変数（Modelオブジェクト用のparams（List）、オブジェクト）を作成する。
     @book = Book.new(book_params)
     #3. データをデータベースに保存するためのsaveメソッド実行
@@ -23,7 +26,7 @@ class BooksController < ApplicationController
     else
     #4-2 指定アクション名で同一コントローラー内の別アクションのviewを表示する。
       flash.now[:alert] = "投稿に失敗しました。" #キーをalertに変更
-      render :new
+      render :index
 
     end
   end
@@ -47,7 +50,7 @@ class BooksController < ApplicationController
   private
   # ストロングパラメータ
   def book_params
-    params.require(:book).permit(:title, :body,)
+    params.require(:book).permit(:title, :body)
 
   end
 end

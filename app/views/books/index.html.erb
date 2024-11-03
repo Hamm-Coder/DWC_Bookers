@@ -14,16 +14,18 @@
     <% @books.each do |book| %>
       <tr>
         <td><%= book.title %></td>
-        <td><%= book.comment %></td>
+        <td><%= book.body %></td>
         <td><a class="show_<%= book.id %>" href="/books/<%= book.id %>">Show</a></td>
         <td><a class="edit_<%= book.id %>" href="/books/<%= book.id %>/edit">Edit</a></td>
         <td><a data-confirm="Are you sure?" class="destroy_<%= book.id %>" rel="nofollow" data-method="delete" href="/books/<%= book.id %>">Destroy</a></td>
+        <td><a data-confirm="Are you sure?" class="destroy_252181" rel="nofollow" data-method="delete" href="/books/252181">Destroy</a></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 </div>
 <p></p>
+
 <h1>New Book</h1>
 <!-- form_with部分-->
 <% if @book.errors.any? %>
