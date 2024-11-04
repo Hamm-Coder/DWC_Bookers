@@ -8,11 +8,6 @@ class BooksController < ApplicationController
     @book = Book.new
   end
 
-#  def new
-#    # Viewへ渡すためのインスタンス変数に空のModelオブジェクト（Book）を生成する。
-#    @book = Book.new
-#  end
-
   def create #create
     #Createを呼び出す際に、indexで使用する一覧用インスタンス変数＠books（Book.all）を呼び出す。
     @books =Book.all
@@ -27,7 +22,6 @@ class BooksController < ApplicationController
     else
     #4-2 指定アクション名で同一コントローラー内のviewを同じアクションで表示する。
       render :index
-
     end
   end
 
@@ -40,9 +34,14 @@ class BooksController < ApplicationController
   end
 
   def update #update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id)
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      #フラッシュメッセージを定義し、詳細画面へリダイレクト（登録完了し、詳細(show)へリダイレクト）
+      flash[:notice] = "Book was successfully updated."
+      redirect_to book_path(@book.id)
+    else
+      render :edit
+    end
   end
 
   def destroy #destroy
@@ -56,6 +55,5 @@ class BooksController < ApplicationController
   # ストロングパラメータ
   def book_params
     params.require(:book).permit(:title, :body)
-
   end
 end

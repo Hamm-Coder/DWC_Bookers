@@ -1,7 +1,4 @@
-
 <h1>Books</h1>
-
-
 <table>
   <thead>
     <tr>
@@ -15,24 +12,21 @@
   </tbody>
 </table>
 
-<p></p>
-
 <h2>New Book</h2>
 <!-- form_with部分-->
 <% if @book.errors.any? %>
   <%= content_tag(:div, id: 'error_explanation') do %>
     <h2><%= @book.errors.count %> errors prohibited this book from being saved:</h2>
     <ul>
-    <% @book.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     </ul>
 
   <% end %>
 <% end %>
 
-
-<%= form_with model: @book, url: '/books', html:{id: 'new_book', class: 'newbook'}, method: :post do |f| %>
+<%= form_with model: @book, url: books_path, html:{id: 'new_book', class: 'newbook'}, method: :post do |f| %>
   <div class="field">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'book_title' %>
